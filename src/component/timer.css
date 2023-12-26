@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.timer{
+    font-size: 3em;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    background-color: aqua;
+    padding: 30px;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.btn{
+    background-color: #333;
+    color: aliceblue;
+    font-size: x-large;
+    font-weight: bolder;
+    padding: 10px;
+    border-radius: 20px;
+}
+.clicked-btn{
+    background-color:crimson ;
+    color:aliceblue ;
+    font-size: x-large;
+    font-weight: bolder;
+    padding: 10px;
+    border-radius: 10px;
+}
