@@ -1,31 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import './timer.css'
+import React, { useState, useEffect, useRef } from 'react';
+import './timer.css';
 
-const Timer = ({ initialTime }) => {
-  const [time, setTime] = useState(initialTime);
-  const [isPaused, setIsPaused] = useState(false);
+const Timer = () => {
+  const [time, setTime] = useState(0);
+  const [isPaused, setIsPaused] = useState(true);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const initialTimeRef = useRef(0);
 
   useEffect(() => {
+    initialTimeRef.current = time;
     if (!isPaused && time > 0) {
       const timerId = setInterval(() => {
         setTime(prevTime => prevTime - 1);
       }, 1000);
+
       return () => clearInterval(timerId);
     }
-   
-  }, [time , isPaused]); 
-  const handlePauseResume = () => {
-    setIsPaused(prevIsPaused => !prevIsPaused);
-    setButtonClicked(!buttonClicked);
+
+  }, [time, isPaused]);
+
+  const startTimer = () => {
+    setIsPaused(false);
+    setButtonClicked(true);
+  };
+
+  const stopTimer = () => {
+    setIsPaused(true);
+    setButtonClicked(false);
+  };
+
+  const resetTimer = () => {
+    setIsPaused(true);
+    initialTimeRef.current = 0; 
+    setTime(0); 
+    setButtonClicked(false);
+    document.querySelector('.input').value = 0; 
+  };
+
+  const handleInputChange = (event) => {
+    const inputValue = parseInt(event.target.value, 10) || 0;
+    initialTimeRef.current = inputValue;
+    if (!buttonClicked) {
+      setTime(inputValue);
+    }
   };
 
   return (
     <>
-    <div className='container'>
-      <h1 className='timer'>Timer: {time} seconds</h1>
-      <button className= {buttonClicked?'clicked-btn':'btn'} onClick={handlePauseResume}>{isPaused ? 'Resume' : 'Pause'} </button>
-    </div>
+      <div className='container'>
+        <input
+          className='input'
+          type='number'
+          placeholder='Enter Time ...'
+          onChange={handleInputChange}
+        />
+        <h1 className='timer'>Timer: {Math.floor(time / 60)}  minute {time % 60} sec</h1>
+        <div>
+          <button className='start-btn' onClick={startTimer}>Start</button>
+          <button className='stop-btn' onClick={stopTimer}>Stop</button>
+          <button className='reset-btn' onClick={resetTimer}>Reset</button>
+        </div>
+      </div>
     </>
   );
 };
