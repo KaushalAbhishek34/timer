@@ -39,7 +39,14 @@ const Timer = () => {
 
   const handleInputChange = (event) => {
     const inputValue = parseInt(event.target.value, 10) || 0;
+  
+    if (inputValue < 0) {
+      alert("Value should not be less than 0");
+      return;
+    }
+  
     initialTimeRef.current = inputValue;
+  
     if (!buttonClicked) {
       setTime(inputValue);
     }
