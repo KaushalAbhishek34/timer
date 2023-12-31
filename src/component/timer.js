@@ -55,10 +55,11 @@ const Timer = () => {
   return (
     <>
       <div className='container'>
+        <h2>Enter Value Of Timer</h2>
         <input
           className='input'
           type='number'
-          placeholder='Enter Time ...'
+          placeholder='Time ...'
           onChange={handleInputChange}
         />
         <h1 className='timer'>Timer: {Math.floor(time / 60)}  minute {time % 60} sec</h1>
