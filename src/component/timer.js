@@ -12,6 +12,7 @@ const Timer = () => {
 
     if (inputValue < 0) {
       alert("Value should not be less than 0");
+      document.querySelector('.input').value = "";
       return;
     }
 
@@ -20,17 +21,17 @@ const Timer = () => {
     if (!buttonClicked) {
       setTime(inputValue);
     }
-  }, [buttonClicked]);
+  }, [buttonClicked, setTime]);
 
-  const startTimer = useCallback(() => {
+  const startTimer = () => {
     setIsPaused(false);
     setButtonClicked(true);
-  }, []);
+  };
 
-  const stopTimer = useCallback(() => {
+  const stopTimer = () => {
     setIsPaused(true);
     setButtonClicked(false);
-  }, []);
+  };
 
   const resetTimer = useCallback(() => {
     setIsPaused(true);
@@ -38,7 +39,7 @@ const Timer = () => {
     setTime(0);
     setButtonClicked(false);
     document.querySelector('.input').value = "";
-  }, []);
+  }, [setTime]);
 
   useEffect(() => {
     initialTimeRef.current = time;
@@ -49,7 +50,7 @@ const Timer = () => {
 
       return () => clearInterval(timerId);
     }
-  }, [time, isPaused]);
+  }, [time, isPaused, setTime]);
 
   const formattedTime = useMemo(() => `${Math.floor(time / 60)} minute ${time % 60} sec`, [time]);
 
@@ -60,6 +61,7 @@ const Timer = () => {
         <input
           className='input'
           type='number'
+          inputMode='numeric'
           placeholder='Time ...'
           onChange={handleInputChange}
         />
@@ -81,3 +83,4 @@ const Timer = () => {
 };
 
 export default Timer;
+
